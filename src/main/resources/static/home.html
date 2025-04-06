@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Checker & Recovery Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <div class="title">TetraCare+</div>
+
+    <div class="navbar-container">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="beds.html">Beds/Room Booking</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="home.html">Symptom Tracker</a>
+            <a href="equipment.html">Equipment</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </div>
+
+
+
+
+    <h1>Symptom Checker</h1>
+
+    <!-- ✅ Symptom Checker UI -->
+    <textarea id="symptomsInput" placeholder="Enter your symptoms..."></textarea>
+    <button onclick="checkSymptoms()">Analyze Symptoms</button>
+    <p id="loadingMessage" style="display: none;">⏳ Analyzing symptoms...</p>
+    <p id="aiResponse"></p>
+
+    <hr>
+
+    <!-- ✅ Symptom Timeline & Recovery Tracker -->
+    <h2>Symptom Timeline & Recovery Tracker</h2>
+    <input type="text" id="symptomLog" placeholder="Enter symptoms (e.g., Cough, Fever)">
+    <select id="severity">
+        <option value="Mild">Mild</option>
+        <option value="Moderate">Moderate</option>
+        <option value="Severe">Severe</option>
+    </select>
+    <input type="number" id="duration" placeholder="Duration in days">
+    <button onclick="logSymptoms()">Log Symptoms</button>
+
+    <button onclick="fetchRecoveryTracker()">View My Symptom Timeline</button>
+    <div id="recoveryTrackerResults"></div>
+
+    <button onclick="exportToPDF()">Download Symptom Report</button>
+
+    <script>
+        const userId = "user123"; // Placeholder for authentication
+
+        // ✅ Check symptoms using Gemini AI
+        function checkSymptoms() {
+            const symptoms = document.getElementById("symptomsInput").value;
+            document.getElementById("loadingMessage").style.display = "block";
+
+            fetch("http://localhost:8080/api/analyze-symptoms", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId, symptoms })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("loadingMessage").style.display = "none";
+                document.getElementById("aiResponse").innerText = data.severity || "No response received!";
+            })
+            .catch(error => {
+                document.getElementById("loadingMessage").style.display = "none";
+                document.getElementById("aiResponse").innerText = "Error fetching response.";
+            });
+        }
+
+        // ✅ Log symptoms for recovery tracking
+        function logSymptoms() {
+    const symptoms = document.getElementById("symptomLog").value;
+    const severity = document.getElementById("severity").value;
+    const duration = parseInt(document.getElementById("duration").value, 10);
+
+
+    fetch("http://localhost:8080/api/log-symptoms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, symptoms, severity, duration })
+    })
+    .then(response => response.text()) // ✅ Expecting a text response, not JSON
+    .then(data => {
+        console.log("📩 Server response:", data);
+        alert(data); // ✅ Show response message in an alert
+    })
+    .catch(error => {
+        console.error("❌ Error:", error);
+        alert("❌ Error logging symptoms.");
+    });
+}
+
+
+
+        // ✅ Fetch Recovery Timeline
+        function fetchRecoveryTracker() {
+            fetch(`http://localhost:8080/api/recovery-tracker/${userId}`)
+            .then(response => response.json())
+            .then(data => {
+                let resultHTML = "<h3>Recovery Progress:</h3>";
+                if (data.length === 0) {
+                    resultHTML += "<p>⚠️ No recovery data available.</p>";
+                } else {
+                    data.forEach(entry => {
+                        resultHTML += `<p>${entry.dateLogged}: ${entry.symptoms} - ${entry.severity}</p>`;
+                    });
+                }
+                document.getElementById("recoveryTrackerResults").innerHTML = resultHTML;
+            })
+            .catch(error => document.getElementById("recoveryTrackerResults").innerText = "Error fetching recovery data.");
+        }
+
+        // ✅ Export to PDF (Doctor Sharing Mode)
+        function exportToPDF() {
+            fetch(`http://localhost:8080/api/download-report/${userId}`)
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "Symptom_Report.pdf";
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(error => alert("Error generating PDF report."));
+        }
+    </script>
+</body>
+</html>

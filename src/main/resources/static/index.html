@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TetraCare+ Hospital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html {
+        scroll-behavior: smooth;
+    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .title {
+        animation: bounceIn 1.5s ease-in-out;
+    }
+
+    @keyframes bounceIn {
+        0% { transform: scale(0.5); opacity: 0; }
+        60% { transform: scale(1.1); opacity: 1; }
+        100% { transform: scale(1); }
+    }
+        /* Title Styling */
+        .title {
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #0073e6;
+            text-transform: uppercase;
+        }
+
+        /* Navbar Styling */
+        .navbar-container {
+            width: 100%;
+            background: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: #0073e6;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 20px;
+            padding: 10px 15px;
+            transition: 0.3s ease-in-out;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background: #0073e6;
+            color: white;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .search-bar input {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .search-bar input:focus {
+            box-shadow: 0 0 8px #0073e6;
+            outline: none;
+        }
+        .search-bar button {
+            padding: 10px;
+            margin-left: 10px;
+            background: #0073e6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease-in-out;
+        }
+        .search-bar button:hover {
+            background: #005bb5;
+        }
+
+        /* Paragraph Container */
+        .paragraph-container {
+            width: 80%;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        .paragraph-container:hover {
+            transform: scale(1.02);
+        }
+
+        /* Paragraph Styling & Animation */
+        p {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.6;
+            text-align: justify;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeUp 1s ease-in-out forwards;
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        p:hover {
+    transform: translateY(-3px);
+    transition: 0.3s ease-in-out;
+}
+
+        /* Buttons */
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 15px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Emergency SOS Button */
+        .sos-btn {
+            background: red;
+            color: white;
+        }
+
+        /* Virtual Doctor Consultation */
+        .doctor-btn {
+            background: #0073e6;
+            color: white;
+        }
+
+        /* Smart Bed Tracker */
+        .bed-tracker {
+            background: green;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+        background-color: #0073e6;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .footer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .social-media {
+        margin-top: 10px;
+    }
+
+    .social-media a {
+        margin: 0 10px;
+        display: inline-block;
+    }
+
+    .social-media img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .social-media img:hover {
+        transform: scale(1.2);
+    }
+
+        #backToTop {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: #0073e6;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        display: none;
+        transition: 0.3s;
+    }
+    #backToTop:hover {
+        transform: scale(1.1);
+    }
+
+    .logo-container {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+
+        .logo-container img {
+            width: 80px; /* Adjust size as needed */
+            height: 80px; /* Ensure equal width & height for a perfect circle */
+            border-radius: 50%; /* Makes it circular */
+            object-fit: cover; /* Ensures the image fills the circle properly */
+            border: 2px solid #0073e6; /* Optional: Adds a border around the logo */
+        }
+
+        /* Hero Section */
+/* Hero Section */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 90vh; /* Full-screen height */
+    overflow: hidden;
+}
+
+/* Container for all slides */
+.slides-container {
+    display: flex;
+    width: 400%; /* 4 slides, so 100% * 4 */
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Individual Slide */
+.slide {
+    width: 100%;
+    flex-shrink: 0;
+    height: 100%;
+    position: relative;
+}
+
+/* Ensure images fit without cropping */
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Overlay Text */
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    color: white;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+}
+
+.overlay-text h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.overlay-text p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.btn {
+    background: #ff9900;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #e68900;
+}
+
+/* Slider Buttons */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.left {
+    left: 20px;
+}
+
+.right {
+    right: 20px;
+}
+
+.slider-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* Dots */
+.dots-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    margin: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: white;
+}
+/* Chatbot styles */
+.chatbot-container {
+      position: fixed;
+      bottom: 80px;
+      right: 30px;
+      width: 320px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+    .chat-header {
+      background-color: #4f46e5;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .chat-messages {
+      height: 250px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+    .chat-input input {
+      flex-grow: 1;
+      padding: 10px;
+      border: none;
+      border-bottom-left-radius: 10px;
+    }
+    .chat-input button {
+      background: #4f46e5;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-bottom-right-radius: 10px;
+    }
+    #chat-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+
+    .dark-mode {
+    background-color: #1c1c1c;
+    color: white;
+  }
+  .container {
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 20px;
+  }
+  #chat-box {
+    height: 400px;
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background: white;
+    margin-bottom: 10px;
+  }
+  .input-container {
+    display: flex;
+  }
+  #user-input {
+    flex: 1;
+    padding: 10px;
+    text-decoration: #0073e6;
+  }
+  button {
+    padding: 10px;
+  }
+  .user { text-align: right; margin: 10px; }
+  .bot { text-align: left; margin: 10px; }
+   
+
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="logo.jpg" alt="TetraCare+ Logo">
+    </div>
+
+    <div class="title">TetraCare+ Hospital</div>
+
+    <div class="navbar-container">
+       <nav>
+            <a href="index.html">Home</a>
+            <a href="beds.html">Beds/Room Booking</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="home.html">Symptom Tracker</a>
+            <a href="equipment.html">Equipment</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for services, doctors, facilities...">
+        <button onclick="search()">Search</button>
+    </div>
+
+    <section class="hero-slider">
+        <div class="slides">
+            <div class="slide active">
+                <img src="doctor0.png" alt="Hospital Interior">
+                <div class="overlay-text">
+                    <h1>Welcome to TetraCare+</h1>
+                    <p>Providing the best healthcare services for you</p>
+                    <a href="#services" class="btn">Explore Services</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="doctor5.png" alt="Hospital Room">
+                <div class="overlay-text">
+                    <h1>Advanced Medical Facilities</h1>
+                    <p>Experience state-of-the-art healthcare</p>
+                    <a href="#appointments" class="btn">Book Appointment</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="doctor2.webp" alt="Hospital Exterior">
+                <div class="overlay-text">
+                    <h1>Expert Doctors & Staff</h1>
+                    <p>Your health, our priority</p>
+                    <a href="#team" class="btn">Meet Our Doctors</a>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="doctor3.webp" alt="Medical Equipment">
+                <div class="overlay-text">
+                    <h1>Emergency Care 24/7</h1>
+                    <p>Immediate medical attention when you need it</p>
+                    <a href="#contact" class="btn">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Navigation Arrows -->
+        <button class="slider-btn left" id="prev">&#10094;</button>
+        <button class="slider-btn right" id="next">&#10095;</button>
+    
+        <!-- Navigation Dots -->
+        <div class="dots-container">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+        </div>
+    </section>
+    
+    <div class="paragraph-container">
+        <b>Welcome to TetraCare+ Hospital</b>
+        <p>Your trusted healthcare partner providing world-class medical services with cutting-edge technology and compassionate care.</p>
+
+        <b>About TetraCare+</b>
+        <p>Founded in 2015, TetraCare+ has been at the forefront of medical innovation, offering specialized care in cardiology, neurology, pediatrics, and emergency services. Our team of expert doctors and nurses are dedicated to your well-being.</p>
+    </div>
+
+    <div class="button-container">
+        <button class="btn sos-btn" onclick="window.location.href='tel:+911'">🚑 Emergency Call</button>
+        <button class="btn doctor-btn" onclick="window.open('https://meet.google.com/', '_blank')">💬 Talk to a Doctor</button>
+        <button class="btn bed-tracker" onclick="redirectToBeds()">🛏 View Bed Availability</button>
+    </div>
+    <button id="backToTop" onclick="scrollToTop()">⬆</button>
+    <div class="fixed bottom-4 right-4">
+        <button id="toggleChat" class="bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 text-lg">💬</button>
+      </div>
+    
+      <div id="chatContainer" class="hidden fixed bottom-20 right-4 w-full max-w-md bg-white dark:bg-gray-800 shadow-2xl rounded-2xl overflow-hidden z-50">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700" style="background-color: white;">
+          <h2 class="text-xl font-semibold">TetraCare+ Chatbot</h2>
+          <div class="flex gap-2 items-center">
+            <button id="clearChat" title="Clear Chat" class="text-xl">🗑️</button>
+            <button id="exportChat" title="Export Chat" class="text-xl">📄</button>
+            <button id="modeToggle" title="Toggle Dark Mode" class="text-xl">🌙</button>
+          </div>
+        </div>
+    
+        <!-- Chat Area -->
+        <div id="chatBox" class="p-4 space-y-2 h-[350px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600">
+          <!-- Messages appear here -->
+        </div>
+    
+        <!-- Input -->
+        <form id="chatForm" class="flex items-center gap-2 border-t border-gray-200 dark:border-gray-700 p-4">
+          <input
+            type="text"
+            id="messageInput"
+            placeholder="Type your message..."
+            class="flex-1 px-4 py-2 rounded-full border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring focus:ring-blue-400 dark:focus:ring-blue-600"
+          />
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full transition-colors">Send</button>
+          <!-- Voice input button moved to input section -->
+          <button type="button" id="voiceInput" title="Voice Input" class="bg-gray-200 dark:bg-gray-700 text-black dark:text-white p-3 rounded-full ml-2">
+            🎙️
+          </button>
+        </form>
+      </div>
+    
+      <audio id="sendSound" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
+      <script src="script.js"></script>
+    
+    <footer>
+        <div class="footer-container">
+    
+            <div class="social-media">
+                <a href="https://www.facebook.com" target="_blank">
+                    <img src="facebook.png" alt="Facebook">
+                </a>
+                <a href="https://www.twitter.com" target="_blank">
+                    <img src="twitter.png" alt="Twitter">
+                </a>
+                <a href="https://www.instagram.com" target="_blank">
+                    <img src="insta.jpeg" alt="Instagram">
+                </a>
+                <a href="https://www.linkedin.com" target="_blank">
+                    <img src="linkedin.png" alt="LinkedIn">
+                </a>
+                <p>&copy; 2025 TetraCare+ Hospital. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function search() {
+            const query = document.getElementById("searchInput").value.toLowerCase();
+            const pages = {
+                "beds": "beds.html",
+                "room booking": "beds.html",
+                "appointments": "appointments.html",
+                "equipment": "equipment.html",
+                "contact": "contact.html"
+            };
+            if (pages[query]) {
+                window.location.href = pages[query];
+            } else {
+                alert("No results found.");
+            }
+        }
+
+        function redirectToBeds() {
+            alert("Redirecting to Bed Availability...");
+            setTimeout(() => {
+                window.location.href = "beds.html";
+            }, 2000);
+        }
+
+        window.onscroll = function () {
+        let btn = document.getElementById("backToTop");
+        btn.style.display = window.scrollY > 300 ? "block" : "none";
+    };
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".dot");
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, index) => {
+            slide.style.display = index === currentSlide ? "block" : "none";
+        });
+
+        dots.forEach((dot, index) => {
+            dot.classList.toggle("active", index === currentSlide);
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlides();
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlides();
+    }
+
+    document.getElementById("next").addEventListener("click", nextSlide);
+    document.getElementById("prev").addEventListener("click", prevSlide);
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener("click", function () {
+            currentSlide = index;
+            updateSlides();
+        });
+    });
+
+    updateSlides(); // Initialize the first slide
+
+    setInterval(nextSlide, 3000); // Auto-slide every 3 seconds
+});
+
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Gateway - TetraCare+</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #f4f4f4;
+    }
+    .container {
+      width: 50%;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .payment-method, .upi-login-method {
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: 0.3s;
+    }
+    .payment-method:hover, .upi-login-method:hover {
+      background: #e6f7ff;
+      border-color: #0073e6;
+    }
+    .payment-method img, .upi-login-method img {
+      width: 50px;
+      margin-right: 15px;
+    }
+    .input-box {
+      margin-top: 10px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .confirm-btn, .login-btn {
+      width: 100%;
+      background: #0073e6;
+      color: white;
+      border: none;
+      padding: 12px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+    .confirm-btn:hover, .login-btn:hover {
+      background: #005bb5;
+    }
+    .hidden {
+      display: none;
+    }
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: #28a745;
+      color: white;
+      font-size: 18px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Payment Method Selection -->
+  <div class="container" id="paymentSelection">
+    <h2>Choose Payment Method</h2>
+
+    <div class="payment-method" onclick="startUpiLogin('googlepay')">
+      <img src="googlepay.png" alt="Google Pay" /> Google Pay (UPI)
+    </div>
+    <div class="payment-method" onclick="startUpiLogin('phonepe')">
+      <img src="phonepay.png" alt="PhonePe" /> PhonePe (UPI)
+    </div>
+    <div class="payment-method" onclick="startUpiLogin('paytm')">
+      <img src="paytm.png" alt="Paytm" /> Paytm (UPI)
+    </div>
+
+    <div class="payment-method" onclick="showCardInput()">
+      <img src="credit.jpeg" alt="Credit/Debit Card" /> Debit / Credit Card
+    </div>
+    <div class="input-box hidden" id="card-input">
+      <input type="text" id="card-number" placeholder="Card Number" />
+      <input type="text" id="card-name" placeholder="Name on Card" />
+      <input type="text" id="expiry" placeholder="Expiry (MM/YY)" />
+      <input type="text" id="cvv" placeholder="CVV" />
+      <button class="confirm-btn" onclick="processCardPayment()">Pay Now</button>
+    </div>
+
+    <div class="payment-method" onclick="showNetBanking()">
+      <img src="netbank.png" alt="Net Banking" /> Net Banking
+    </div>
+    <div class="input-box hidden" id="netbanking-input">
+      <select id="bank-select">
+        <option value="">Select Your Bank</option>
+        <option value="https://retail.onlinesbi.sbi">State Bank of India</option>
+        <option value="https://netbanking.hdfcbank.com">HDFC Bank</option>
+        <option value="https://www.icicibank.com">ICICI Bank</option>
+        <option value="https://www.axisbank.com">Axis Bank</option>
+      </select>
+      <button class="confirm-btn" onclick="redirectToBank()">Proceed</button>
+    </div>
+  </div>
+
+  <!-- UPI Login Container -->
+  <div class="container hidden" id="upiLoginContainer">
+    <h2 id="upiLoginTitle">UPI Login</h2>
+    <div class="input-box">
+      <input type="text" id="upi-username" placeholder="Username or UPI ID" />
+      <input type="password" id="upi-password" placeholder="Password" />
+      <button class="login-btn" onclick="processUpiLogin()">Login</button>
+    </div>
+  </div>
+
+  <!-- UPI Payment Confirmation Container -->
+  <div class="container hidden" id="upiPaymentContainer">
+    <h2>Confirm Payment</h2>
+    <p id="upiPaymentDetails"></p>
+    <button class="confirm-btn" onclick="confirmUpiPayment()">Confirm Payment</button>
+  </div>
+
+  <!-- Payment Success Message -->
+  <div class="container hidden" id="confirmationMessage">
+    ✅ Payment Successful! Your booking is confirmed.
+  </div>
+
+  <script>
+    // Global variable to store the selected UPI provider and amount
+    let selectedUpiProvider = "";
+    const amount = 500; // Payment amount (could be dynamic)
+
+    // Start UPI Login flow by hiding main selection and showing login form
+    function startUpiLogin(provider) {
+      selectedUpiProvider = provider;
+      // Change the login title depending on provider (for simulation)
+      document.getElementById("upiLoginTitle").innerText = 
+        provider === "googlepay" ? "Google Pay Login" : 
+        provider === "phonepe" ? "PhonePe Login" : "Paytm Login";
+      document.getElementById("paymentSelection").classList.add("hidden");
+      document.getElementById("upiLoginContainer").classList.remove("hidden");
+    }
+
+    // Process UPI Login (this is simulated; in a real system, authentication occurs on the server)
+    function processUpiLogin() {
+      const username = document.getElementById("upi-username").value;
+      const password = document.getElementById("upi-password").value;
+      if (username && password) {
+        // Hide login container and show payment details
+        document.getElementById("upiLoginContainer").classList.add("hidden");
+        document.getElementById("upiPaymentContainer").classList.remove("hidden");
+        document.getElementById("upiPaymentDetails").innerText = 
+          "Amount to be paid: ₹" + amount + " to the hospital.";
+      } else {
+        alert("Please enter your login credentials.");
+      }
+    }
+
+    // Confirm UPI Payment (this is simulated confirmation)
+    function confirmUpiPayment() {
+      document.getElementById("upiPaymentContainer").classList.add("hidden");
+      document.getElementById("confirmationMessage").classList.remove("hidden");
+    }
+
+    // Show Card Payment Inputs
+    function showCardInput() {
+      document.getElementById("card-input").classList.remove("hidden");
+      document.getElementById("netbanking-input").classList.add("hidden");
+      document.getElementById("paymentSelection").classList.remove("hidden");
+      // Hide any UPI or previous card inputs if visible
+      document.getElementById("upiLoginContainer").classList.add("hidden");
+      document.getElementById("upiPaymentContainer").classList.add("hidden");
+    }
+
+    // Process Card Payment
+    function processCardPayment() {
+      let cardNumber = document.getElementById("card-number").value;
+      let cardName = document.getElementById("card-name").value;
+      let expiry = document.getElementById("expiry").value;
+      let cvv = document.getElementById("cvv").value;
+      if (cardNumber && cardName && expiry && cvv) {
+        alert("Redirecting to secure payment gateway...");
+        setTimeout(() => {
+          window.location.href = "https://secure-payment-gateway.com";
+        }, 1000);
+      } else {
+        alert("Please enter all card details.");
+      }
+    }
+
+    // Show Net Banking Inputs
+    function showNetBanking() {
+      document.getElementById("netbanking-input").classList.remove("hidden");
+      document.getElementById("card-input").classList.add("hidden");
+      document.getElementById("paymentSelection").classList.remove("hidden");
+      // Hide any UPI containers if visible
+      document.getElementById("upiLoginContainer").classList.add("hidden");
+      document.getElementById("upiPaymentContainer").classList.add("hidden");
+    }
+
+    // Redirect to selected Bank's login page
+    function redirectToBank() {
+      let bankUrl = document.getElementById("bank-select").value;
+      if (bankUrl) {
+        window.location.href = bankUrl;
+      } else {
+        alert("Please select a bank.");
+      }
+    }
+  </script>
+
+</body>
+</html>

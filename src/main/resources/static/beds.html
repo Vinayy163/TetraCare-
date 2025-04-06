@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bed/Room Booking - TetraCare+</title>
+    <style>
+        html {
+        scroll-behavior: smooth;
+    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .title {
+        animation: bounceIn 1.5s ease-in-out;
+    }
+
+    @keyframes bounceIn {
+        0% { transform: scale(0.5); opacity: 0; }
+        60% { transform: scale(1.1); opacity: 1; }
+        100% { transform: scale(1); }
+    }
+        /* Title Styling */
+        .title {
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #0073e6;
+            text-transform: uppercase;
+        }
+
+        /* Navbar Styling */
+        .navbar-container {
+            width: 100%;
+            background: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        nav a {
+            text-decoration: none;
+            color: #0073e6;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 20px;
+            padding: 10px 15px;
+            transition: 0.3s ease-in-out;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background: #0073e6;
+            color: white;
+        }
+        .logo-container {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+
+        .logo-container img {
+            width: 80px; /* Adjust size as needed */
+            height: 80px; /* Ensure equal width & height for a perfect circle */
+            border-radius: 50%; /* Makes it circular */
+            object-fit: cover; /* Ensures the image fills the circle properly */
+            border: 2px solid #0073e6; /* Optional: Adds a border around the logo */
+        }
+
+        .title {
+            margin-left: 120px; /* Adjust spacing to avoid overlap */
+        }
+        
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        
+        .room-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .room-category {
+            flex: 1;
+            padding: 15px;
+            background: #e6f7ff;
+            border-radius: 8px;
+            border-left: 5px solid #0073e6;
+            min-width: 30%;
+            transition: transform 0.3s ease-in-out;
+        }
+        .room-category:hover {
+            transform: translateY(-5px);
+        }
+        
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            justify-content: center;
+            margin: 15px auto;
+        }
+
+        .room {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .available {
+            background-color: #4CAF50;
+            color: white;
+            transition: transform 0.3s ease-in-out;
+        }
+        .available:hover {
+            background-color: #45a049;
+            border: 2px solid black;
+            transform: scale(1.1);
+        }
+        .selected {
+            background-color: #ffa500 !important;
+            border: 2px solid black;
+        }
+        .booked {
+            background-color: #d9534f;
+            color: white;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+         
+        .form-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #e6f7ff;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.5s ease-in-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .form-container input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-container button {
+            background: #0073e6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .form-container button:hover {
+            background: #005bb5;
+        }
+        
+        .book-now {
+            display: none;
+            margin-top: 10px;
+            background: #0073e6;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s ease-in-out;
+        }
+        .book-now:hover {
+            background: #005bb5;
+        }
+        footer {
+        background-color: #0073e6;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .footer-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .social-media {
+        margin-top: 10px;
+    }
+
+    .social-media a {
+        margin: 0 10px;
+        display: inline-block;
+    }
+
+    .social-media img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .social-media img:hover {
+        transform: scale(1.2);
+    }
+    </style>
+</head>
+<body>
+
+    <div class="logo-container">
+        <img src="logo.jpg" alt="TetraCare+ Logo">
+    </div>
+
+    <div class="title">TetraCare+ Hospital</div>
+
+    <div class="navbar-container">
+       <nav>
+            <a href="index.html">Home</a>
+            <a href="beds.html">Beds/Room Booking</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="home.html">Symptom Tracker</a>
+            <a href="equipment.html">Equipment</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </div>
+
+    <div class="container">
+        <h2>Bed/Room Booking</h2>
+        <p>Select up to 2 rooms and proceed to book</p>
+
+        <div class="room-container">
+            <div class="room-category">
+                <h3>General Ward - ₹2000/night</h3>
+                <div class="room-grid" id="generalRooms"></div>
+                <button class="book-now" id="bookGeneral" onclick="showForm()">Book Now</button>
+            </div>
+
+            <div class="room-category">
+                <h3>ICU - ₹5000/night</h3>
+                <div class="room-grid" id="icuRooms"></div>
+                <button class="book-now" id="bookICU" onclick="showForm()">Book Now</button>
+            </div>
+
+            <div class="room-category">
+                <h3>Deluxe Room - ₹8000/night</h3>
+                <div class="room-grid" id="deluxeRooms"></div>
+                <button class="book-now" id="bookDeluxe" onclick="showForm()">Book Now</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container form-container" id="bookingForm">
+        <h3>Patient Details</h3>
+        <p><strong>Selected Rooms:</strong> <span id="selectedRooms"></span></p>
+        <p><strong>Total Price:</strong> ₹<span id="totalPrice"></span></p>
+    
+        <input type="text" id="patientName" placeholder="Patient Name" required>
+        <input type="number" id="patientAge" placeholder="Patient Age" required>
+        <input type="text" id="patientAddress" placeholder="Patient Address" required>
+        <input type="tel" id="patientMobile" placeholder="Mobile Number" required pattern="[0-9]{10}">
+    
+        <button onclick="proceedToPayment()">Proceed to Payment</button>
+    </div>
+    <footer>
+        <div class="footer-container">
+    
+            <div class="social-media">
+                <a href="https://www.facebook.com" target="_blank">
+                    <img src="facebook.png" alt="Facebook">
+                </a>
+                <a href="https://www.twitter.com" target="_blank">
+                    <img src="twitter.png" alt="Twitter">
+                </a>
+                <a href="https://www.instagram.com" target="_blank">
+                    <img src="insta.jpeg" alt="Instagram">
+                </a>
+                <a href="https://www.linkedin.com" target="_blank">
+                    <img src="linkedin.png" alt="LinkedIn">
+                </a>
+                <p>&copy; 2025 TetraCare+ Hospital. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let selectedRooms = [];
+        let totalAmount = 0;
+
+        function generateRooms(category, count, price, containerId) {
+            const container = document.getElementById(containerId);
+            for (let i = 1; i <= count; i++) {
+                const room = document.createElement("div");
+                room.classList.add("room", "available");
+                room.textContent = `${category.charAt(0)}-${i}`;
+                room.onclick = () => toggleRoomSelection(room, price);
+                container.appendChild(room);
+            }
+        }
+
+        function toggleRoomSelection(room, price) {
+            if (selectedRooms.includes(room.textContent)) {
+                selectedRooms = selectedRooms.filter(r => r !== room.textContent);
+                totalAmount -= price;
+                room.classList.remove("selected");
+            } else {
+                if (selectedRooms.length < 2) {
+                    selectedRooms.push(room.textContent);
+                    totalAmount += price;
+                    room.classList.add("selected");
+                }
+            }
+            document.querySelectorAll(".book-now").forEach(btn => btn.style.display = selectedRooms.length > 0 ? "block" : "none");
+        }
+
+        function showForm() {
+            document.getElementById("selectedRooms").textContent = selectedRooms.join(", ");
+            document.getElementById("totalPrice").textContent = totalAmount;
+            document.getElementById("bookingForm").style.display = "block";
+        }
+
+        generateRooms("General", 20, 2000, "generalRooms");
+        generateRooms("ICU", 20, 5000, "icuRooms");
+        generateRooms("Deluxe", 20, 8000, "deluxeRooms");
+
+        function proceedToPayment() {
+            const patientName = document.getElementById("patientName").value.trim();
+            if (patientName === "") {
+                alert("Please enter the patient's name.");
+                return;
+            }
+            window.location.href = "payment.html";
+        }
+    </script>
+
+</body>
+</html>
