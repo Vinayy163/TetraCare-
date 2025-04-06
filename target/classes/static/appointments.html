@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Doctor Appointment Booking</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    #doctor-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .doctor-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .doctor-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .doctor-card h2 {
+      margin-top: 0;
+      color: #0072ff;
+    }
+
+    .doctor-card p {
+      margin: 8px 0;
+      color: #555;
+    }
+
+    .doctor-card button {
+      padding: 10px 16px;
+      background: #0072ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .doctor-card button:hover {
+      background: #005edb;
+    }
+
+    .no-doctors {
+      text-align: center;
+      font-size: 18px;
+      color: #555;
+    }
+    .navbar-container {
+    width: 100%;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.title {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: white;
+    text-transform: uppercase;
+    
+}
+nav {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    background-color: white;
+}
+nav a {
+    text-decoration: none;
+    color: #0073e6;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 20px;
+    padding: 10px 15px;
+    transition: 0.3s ease-in-out;
+    border-radius: 5px;
+}
+nav a:hover {
+    background: #0073e6;
+    color: white;
+}
+  </style>
+</head>
+<body>
+    <div class="title">TetraCare+</div>
+
+    <div class="navbar-container">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="beds.html">Beds/Room Booking</a>
+            <a href="appointments.html">Appointments</a>
+            <a href="home.html">Symptom Tracker</a>
+            <a href="contact.html">Contact Us</a>
+        </nav>
+    </div>
+  <h1>Available Doctors</h1>
+  <div id="doctor-list">Loading...</div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("Fetching doctors...");
+      fetch("/doctors")
+        .then(response => response.json())
+        .then(doctors => {
+          console.log("Doctors received:", doctors);
+          let doctorList = document.getElementById("doctor-list");
+          doctorList.innerHTML = "";
+          if (doctors.length === 0) {
+            doctorList.innerHTML = "<p class='no-doctors'>No doctors available.</p>";
+            return;
+          }
+          doctors.forEach(doctor => {
+            let doctorDiv = document.createElement("div");
+            doctorDiv.className = "doctor-card";
+            doctorDiv.innerHTML = `
+              <h2>${doctor.name}</h2>
+              <p><strong>Specialty:</strong> ${doctor.specialty}</p>
+              <p><strong>Experience:</strong> ${doctor.experience} years</p>
+              <button onclick="bookAppointment('${doctor.id}')">Book</button>
+            `;
+            doctorList.appendChild(doctorDiv);
+          });
+        })
+        .catch(error => {
+          console.error("Error fetching doctors:", error);
+          document.getElementById("doctor-list").innerHTML = "<p class='no-doctors'>Failed to load doctors.</p>";
+        });
+    });
+
+    function bookAppointment(doctorId) {
+      window.location.href = `book.html?doctorId=${doctorId}`;
+    }
+  </script>
+</body>
+</html>
