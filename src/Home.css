@@ -1,0 +1,223 @@
+/* Home Container */
+.home-container {
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #4169E1; /* Royal Blue */
+  color: white;
+  transition: background 0.5s ease-in-out;
+  position: relative;
+}
+
+/* Logo Styling with Border */
+.logo {
+  width: 180px;
+  height: auto;
+  margin-bottom: 20px;
+  border: 5px solid #001f3f; /* Navy Blue */
+  border-radius: 12px;
+}
+
+/* Welcome Text */
+h1 {
+  font-size: 2.8rem;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+/* Highlighted TetraCare+ Text */
+.highlight {
+  color: #001f3f; /* Navy Blue */
+  font-size: 3.5rem;
+  font-weight: bold;
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Sign-In Button */
+.sign-in-btn {
+  background: white;
+  color: #001f3f;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 12px 30px;
+  border: 2px solid #001f3f;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.sign-in-btn:hover {
+  background: #001f3f;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Toggle Switch (Positioned Top Right) */
+.toggle-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide Default Checkbox */
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Toggle Background */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 34px;
+  width: 100%;
+  height: 100%;
+  transition: 0.4s;
+}
+
+/* When Checked (Dark Mode) */
+.toggle-switch input:checked + .slider {
+  background-color: #001f3f;
+}
+
+/* Toggle Knob */
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  left: 4px;
+  bottom: 4px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Dark Mode Label */
+.dark-mode-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Dark Mode */
+.dark {
+  background: #1e1e1e;
+  color: white;
+}
+
+.dark .highlight {
+  color: #f8f9fa;
+}
+
+.dark .sign-in-btn {
+  background: #f8f9fa;
+  color: #001f3f;
+}
+
+.dark .sign-in-btn:hover {
+  background: #001f3f;
+  color: white;
+}
+
+.dark .dark-mode-text {
+  color: #f8f9fa;
+}
+/* Toggle Background */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 34px;
+  width: 60px; /* Ensure enough space for the knob */
+  height: 34px; /* Oval shape */
+  transition: 0.4s;
+}
+
+/* Toggle Knob (Fix for Proper Fit) */
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 30px; /* Make knob exactly half the width of the slider */
+  height: 30px; /* Keep it circular */
+  left: 2px; /* Small padding to align properly */
+  bottom: 2px; /* Small padding to align properly */
+  background: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+/* When Checked (Dark Mode On) */
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(26px); /* Ensure it moves correctly */
+}
+/* Toggle Container */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;  /* Set width */
+  height: 25px; /* Set height for proper oval shape */
+}
+
+/* Hide Default Checkbox */
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Slider (Background) */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background-color: #ccc;
+  border-radius: 25px; /* Makes it oval */
+  transition: 0.4s;
+}
+
+/* Knob (Circle) */
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 21px; /* Exact size to fit */
+  height: 21px; /* Circle */
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+/* When Checked */
+.toggle-switch input:checked + .slider {
+  background-color: #2196F3;
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(25px); /* Moves precisely */
+}

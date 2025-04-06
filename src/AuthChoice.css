@@ -1,0 +1,66 @@
+/* Set full background color */
+body {
+    background-color: #020e1b; /* Light blue */
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Centered container with navy blue border */
+.auth-container {
+    width: 40%;
+    margin: 100px auto; /* Centers the container */
+    padding: 30px;
+    background-color: #cce5ff; /* Light blue */
+    border: 3px solid rgb(48, 48, 229); /* Navy blue border */
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Heading styles */
+.auth-heading {
+    color: navy;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Description text */
+.auth-text {
+    color: darkslategray;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Stack buttons vertically */
+.auth-buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons */
+    align-items: center;
+    gap: 15px; /* Space between buttons */
+}
+
+/* Button styles */
+.auth-buttons button {
+    width: 80%;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.signup-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.signin-btn {
+    background-color: #0056b3;
+    color: white;
+}
+
+.auth-buttons button:hover {
+    opacity: 0.8;
+}

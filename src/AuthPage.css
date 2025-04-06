@@ -1,0 +1,59 @@
+/* Force full page background */
+body {
+    background-color: #cce5ff !important;  /* Light blue */
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;  /* Full viewport height */
+    font-family: Arial, sans-serif;
+}
+
+/* Main container */
+.auth-container {
+    width: 350px;
+    background-color: #cce5ff;
+    border: 3px solid navy;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Heading styles */
+.auth-heading {
+    color: navy;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Stacking input fields */
+.auth-input {
+    width: calc(100% - 24px);  /* Ensures input fits within the container */
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid navy;
+    border-radius: 5px;
+    font-size: 16px;
+    display: block; /* Forces block level stacking */
+}
+
+/* Button styling */
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.auth-button:hover {
+    opacity: 0.8;
+}

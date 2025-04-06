@@ -1,0 +1,135 @@
+/* Centering the form */
+.signin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+/* Title Styling */
+h2 {
+  font-size: 26px;
+  color: #007bff;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Input Fields */
+input {
+  width: 85%;
+  max-width: 320px;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Password Field Container */
+.password-container {
+  position: relative;
+  width: 85%;
+  max-width: 320px;
+  margin: 10px 0;
+}
+
+/* Eye Icon Styling */
+.eye-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #007bff;
+  transition: 0.3s;
+}
+
+.eye-icon:hover {
+  color: #0056b3;
+}
+
+/* Buttons */
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 17px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: 12px 0;
+  width: 85%;
+  max-width: 320px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(1);
+}
+
+/* Forgot Password & Toggle Auth */
+.forgot-password,
+.toggle-auth {
+  color: #007bff;
+  cursor: pointer;
+  font-size: 15px;
+  margin-top: 8px;
+  text-decoration: underline;
+  transition: color 0.3s;
+}
+
+.forgot-password:hover,
+.toggle-auth:hover {
+  color: #0056b3;
+}
+
+/* Error & Success Messages */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.success-message {
+  color: green;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .signin-container {
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  input, button {
+    font-size: 14px;
+  }
+}
+.logo {
+  width: 150px;
+  height: auto;
+  display: block;
+  border: 3px solid navy; /* Border color as requested */
+}
